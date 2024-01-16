@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Out</title>
+    
+   {% load static %}
+    
+</head>
+<body>
+    
+    <link rel="stylesheet" a href="{% static 'css/Check_Out.css' %}">
+    <script>
+        document.getElementById("art").innerHTML=localStorage.getItem("item");
+    </script>
+    <div id="container">
+        <ul id ="list_of_items">
+            {% for x in items %}
+            
+            
+            <li>
+                <article id ="art"><img src="http://127.0.0.1:8000/media/{{x.images}}" alt="" id="item_img" >
+                    <span class="s1"> <b>item name :</b> {{x.name}}</span>
+                    <br>
+                    <span class="s2"><b>Price : {{x.price}} LE</b></span>
+                    <ul class ="cart_items">
+                        <li><img src="{% static 'photos/minus.png'%}" alt="" class ="im" ></li>
+                        <li><span class ="in_span">1</span></li>
+                        <li><img src="{% static 'photos/plus2.png'%}" alt="" class="im"></li>
+                    </ul>
+                </article>
+            </li>
+            {% endfor %}
+        
+        </ul>       
+    </div>
+            <table id ="prices">
+                <tr>
+                    <td><b>Total Items : </b></td>
+                    <td class="data"><span>6 Items </span></td>
+                </tr>
+                <tr>
+                    <td><b>price (exc .vat) : </b></td>
+                    <td class="data"><span>230LE </span></td>
+                </tr>
+                <tr>
+                    <td><b>vat 14% : </b></td>
+                    <td class ="data"><span>32LE </span></td>
+                </tr>
+                <tr>
+                    <td><b>Total Price : </b></td>
+                    <td class ="data"><span>262LE </span></td>
+                </tr>
+            </table>
+        
+            </div>
+           
+              
+            
+              <button id="end" onclick ="startTimer()" >Checkout</button>
+              
+
+    </div>
+    <div id="timer"></div>
+    
+    <script>
+        function startTimer() {
+          var timeLimit = 5 * 60;
+          var timerElement = document.getElementById("timer");
+    
+          var timerInterval = setInterval(function() {
+            var minutes = Math.floor(timeLimit / 60);
+            var seconds = timeLimit % 60;    
+            timerElement.innerHTML = "Time left To Edit: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    
+            timeLimit--;
+    
+            if (timeLimit < 0) {
+              clearInterval(timerInterval);
+              timerElement.innerHTML = "Time's up!";
+            }
+          }, 1000);
+
+    
+    setTimeout(function() {
+        alert("Review your order");
+      },5000);
+       
+        }
+        
+      </script>
+</body>
+</html>

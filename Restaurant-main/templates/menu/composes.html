@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composes</title>
+    {% load static %}
+
+
+    <link rel="stylesheet" a href="{% static 'css/composes.css' %}">
+
+</head>
+<body>   
+    <div class="side_panel">
+        <ul>
+            <li><a class="sign" href="{% url 'itemdrinks' %}">Drinks</a></li>
+            <li><a class="sign" href="{% url 'item' %}">Breakfast</a></li>
+            <li><a class="sign" href="{% url 'itemlunch' %}">Lunch</a></li>
+            <li><a class="sign" href="{% url 'itemdinner' %}">Dinner</a></li>
+            <li><a class="sign" href="{% url 'itemcompose' %}">Composes</a></li>
+            <li><a class="sign" href="{% url 'home' %}">Home</a></li>
+            <li><a class="sign" href="{% url 'check' %}">Check out</a></li>
+            {% if user.is_authenticated %}
+            <li><a class="sign" href="{% url 'logout' %}">Log Out</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="right">
+        <!-- composes -->
+        <div class="compose"  id="com">
+            <div class="heading">
+                <h1>COMPOSE A SANDWICH</h1>
+                <h3>&mdash;Menu info&mdash;</h3>
+                
+            </div>
+           
+
+
+            
+            <div class="menu">
+                <div class="menu-item">
+                {% block content %}
+
+
+
+
+
+            {% for x in itemcompose %}
+            <div>
+                <button class="btn" id="button" onclick=" passvalues(' {{x.name}},{{x.components}},{{x.price}},{{x.images}} ')"><a href="http://127.0.0.1:8000/menu/checkout/">Add to cart</a></button> 
+                <img src="{{x.images.url}}" alt="">
+            </div>
+    
+        
+
+            <h3 class="item-name">  {{x.name}}  <br></h3>
+            <p class="item-components">{{x.components}} <br></p>
+           <p class="item-price"> {{x.price}} <br></p>
+           
+            {% endfor %}
+
+            
+            
+            {% endblock content %}
+
+
+
+        </div>
+
+        </div>
+
+
+            {% comment %} {% block content %}
+
+
+
+
+
+            {% for z in itemcompose %}
+            
+            <h1>
+                {{z.name}}  <br>
+                {{z.price}} <br>
+                {{z.components}} <br>
+                <img src="{{z.images.url}}" alt="">
+            </h1>
+            {% endfor %}
+
+            
+            
+            {% endblock content %}
+
+ {% endcomment %}
+
+
+
+            {% comment %} <div class="compose-item" style="position: relative; top: 18px;"> 
+                <img src="Images/compose.jfif" >
+            </div>
+            <div class="details-c">
+                <div class="details-sub-c">
+                    <h5>Mexican Sandwich</h5>
+                    <h5 class="price"> 30LE </h5>
+                </div>
+                <p> a sandwich with cheese , tomato, hot pepper</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>        
+            <div class="compose-item" style="position: relative; top: 18px;"> 
+                <img src="Images/compose 1.jfif" >
+            </div>        
+            <div class="details-c">
+                <div class="details-sub-c">
+                    <h5>Champions En Tranches</h5>
+                    <h5 class="price"> 60LE </h5>
+                </div>
+                <p> a sandwich with cheese, tomato, an egg and lettuce</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>   
+            <div class="compose-item" style="position: relative; top: 18px;"> 
+                <img src="Images/compose 2.jfif" >
+            </div>             
+            <div class="details-c">
+                <div class="details-sub-c">
+                    <h5>Menu Sandwich</h5>
+                    <h5 class="price"> 65LE</h5>
+                </div>
+                <p> a sandwich with krispy, burger, katchap, mayonaise, salade, sans sauce, fries and fanta</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>                                
+        </div>
+    </div>         {% endcomment %}
+    <script>
+       
+        function passvalues(name,components,price, images){        
+            let obj ={}
+            let arr = name.split(",")
+            obj.name = arr[0]
+            obj.components = arr[1]
+            obj.price= arr[2]
+            obj.images= arr[3]
+            console.log(obj);
+    
+            fetch("http://127.0.0.1:8000/menu/checkout/",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(obj)}).then(res=>console.log(res)).catch(err=>console.log(err))
+            
+        }
+    </script>
+</body>
+</html>

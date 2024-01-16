@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakfast</title>
+  {% load static %}
+ 
+</head>
+
+<body>
+  
+    <link rel="stylesheet" a href="{% static 'css/breakfast.css' %}">
+
+
+    {% csrf_token %}
+    <div class="side_panel">
+        <ul>
+            {% comment %} <a href="{% url 'name' %}">Home</a> {% endcomment %}
+
+            <li><a class="sign" href="{% url 'itemdrinks' %}">Drinks</a></li>
+            <li><a class="sign" href="{% url 'item' %}">Breakfast</a></li>
+            <li><a class="sign" href="{% url 'itemlunch' %}">Lunch</a></li>
+            <li><a class="sign" href="{% url 'itemdinner' %}">Dinner</a></li>
+            <li><a class="sign" href="{% url 'itemcompose' %}">Composes</a></li>
+            <li><a class="sign" href="{% url 'home' %}">Home</a></li>
+            <li><a class="sign" href="{% url 'check' %}">Check out</a></li>
+            {% if user.is_authenticated %}
+            <li><a class="sign" href="{% url 'logout' %}">Log Out</a></li>
+            {% endif %}
+
+
+        </ul>
+    </div>
+    <div class="right">
+        <!-- breakfast -->
+        <div class="breakfast"  id="brk">
+            <div class="heading">
+                <h1>BREAKFAST</h1>
+                <h3>&mdash;Menu info&mdash;</h3>
+                
+            </div>
+
+
+            {% comment %} {% if user.is_authenticated %}
+            {% for message in messages %}
+            {{message}}
+    
+            {% endfor %}    
+            {% endif %} {% endcomment %}
+
+
+            <div class="menu">
+                <div class="menu-item">
+                {% block content %}
+
+                {% if user.is_authenticated %}
+            {% for message in messages %}
+            {{message}}
+    
+            {% endfor %}    
+            {% endif %}
+
+
+            {% for x in item %}
+            <div>
+                <button class="btn" id="button" onclick=" passvalues(' {{x.name}},{{x.components}},{{x.price}},{{x.images}} ')"><a href="http://127.0.0.1:8000/menu/checkout/">Add to cart</a></button> 
+                <img src="{{x.images.url}}" alt="">
+            </div>
+
+            <h3 class="item-name">  {{x.name}}  <br></h3>
+            <p class="item-components">{{x.components}} <br></p>
+           <p class="item-price"> {{x.price}} <br></p>
+           
+            {% endfor %}
+
+            
+            
+            {% endblock content %}
+
+
+
+        </div>
+
+        </div>
+
+            {% comment %} {% block content %}
+
+
+
+
+
+            {% for i in item  %}
+            
+            <h1>
+                <img src="{{i.images.url}}" alt=""> <br>
+                {{i.name}}  <br>
+                {{i.price}} <br>
+                {{i.components}} <br>
+                
+            </h1>
+            {% endfor %}
+
+            
+            
+            {% endblock content %} {% endcomment %}
+            {% comment %} <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/eggs vegetables.jfif" >
+            </div>
+            <div class="details-d">
+                <div class="details-sub-d">
+                    <h5>Eggs</h5>
+                    <h5 class="price"> 15LE </h5>
+                </div>
+                <p> eggs with vegetables</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>   
+            <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/eggs pasterma.jfif" >
+            </div>        
+            <div class="details-b">
+                <div class="details-sub-b">
+                    <h5>Eggs</h5>
+                    <h5 class="price"> 15LE </h5>
+                </div>
+                <p> eggs with pasterma</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>   
+            <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/egg sausage.jfif" >
+            </div>             
+            <div class="details-b">
+                <div class="details-sub-b">
+                    <h5>Eggs</h5>
+                    <h5 class="price"> 20LE </h5>
+                </div>
+                <p> eggs with sausage</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>                
+            <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/beans.jfif" > 
+            </div>             
+            <div class="details-b">
+                <div class="details-sub-b">
+                    <h5>beans</h5>
+                    <h5 class="price"> 10LE </h5>
+                </div>
+                <p> beans with some salt and onion oil</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>                
+            <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/beans tomatos.jfif" > 
+            </div>             
+            <div class="details-b">
+                <div class="details-sub-b">
+                    <h5>beans</h5>
+                    <h5 class="price"> 10LE </h5>
+                </div>
+                <p> beans with tomatos</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>                
+            <div class="breakfast-item" style="position: relative; top: 18px;"> 
+                <img src="Images/fries.jfif" > 
+            </div>             
+            <div class="details-b">
+                <div class="details-sub-b">
+                    <h5>fries</h5>
+                    <h5 class="price"> 5LE </h5>
+                </div>
+                <p> fries with salt</p>
+                <button class="del">Delete </button>
+                <button class="edi" > Edit </button>
+                <button class="add">Add</button>
+            </div>                
+        </div>
+    </div> {% endcomment %}
+    <script>
+       
+        function passvalues(name,components,price, images){        
+            let obj ={}
+            let arr = name.split(",")
+            obj.name = arr[0]
+            obj.components = arr[1]
+            obj.price= arr[2]
+            obj.images= arr[3]
+            console.log(obj);
+    
+            fetch("http://127.0.0.1:8000/menu/checkout/",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(obj)}).then(res=>console.log(res)).catch(err=>console.log(err))
+            
+        }
+    </script>
+</body>
+</html>
